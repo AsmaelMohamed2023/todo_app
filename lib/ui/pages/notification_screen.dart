@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/ui/theme.dart';
@@ -22,11 +24,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back,
+          onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back_ios),
         ),
         elevation: 0,
-        backgroundColor: context.theme.colorScheme.background,
+        backgroundColor: context.theme.backgroundColor,
         title: Text(
           _payload.toString().split('|')[0],
           style: TextStyle(color: Get.isDarkMode ? Colors.white : darkGreyClr),
@@ -78,6 +80,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           Icon(
                             Icons.text_format,
                             size: 30,
+                            color: white,
                           ),
                           SizedBox(width: 20),
                           Text(
@@ -94,7 +97,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       const SizedBox(height: 20),
                       const Row(
                         children: [
-                          Icon(Icons.description, size: 30),
+                          Icon(
+                            Icons.description,
+                            size: 30,
+                            color: white,
+                          ),
                           SizedBox(width: 20),
                           Text(
                             'Description',
@@ -111,7 +118,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       const SizedBox(height: 20),
                       const Row(
                         children: [
-                          Icon(Icons.calendar_today_outlined, size: 30),
+                          Icon(
+                            Icons.calendar_today_outlined,
+                            size: 30,
+                            color: white,
+                          ),
                           SizedBox(width: 20),
                           Text(
                             'Date',
