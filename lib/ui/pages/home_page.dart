@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/services/theme_services.dart';
+import 'package:todo/ui/pages/add_task_page.dart';
 import 'package:todo/ui/pages/notification_screen.dart';
 import 'package:todo/ui/widgets/button.dart';
 
@@ -26,11 +27,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Center(
-        child: MyButton(
-          label: 'Add Task',
-          onTap: () {},
-        ),
-      ),
+          child: MyButton(
+              label: 'Add Task',
+              onTap: () {
+                Get.to(const AddTaskPage());
+              })),
     );
   }
 }
