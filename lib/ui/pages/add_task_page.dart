@@ -37,7 +37,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.backgroundColor,
-      appBar: AppBar(),
+      appBar: _appBar(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
@@ -185,6 +185,28 @@ class _AddTaskPageState extends State<AddTaskPage> {
           ),
         ),
       ),
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      leading: IconButton(
+        onPressed: () => Get.back(),
+        icon: const Icon(
+          Icons.arrow_back_ios,
+          size: 24,
+          color: primaryClr,
+        ),
+      ),
+      elevation: 0,
+      backgroundColor: context.theme.backgroundColor,
+      actions: const [
+        CircleAvatar(
+          backgroundImage: AssetImage('images/person.jpeg'),
+          radius: 18,
+        ),
+        SizedBox(width: 20),
+      ],
     );
   }
 
