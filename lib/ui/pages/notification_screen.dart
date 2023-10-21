@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +9,7 @@ class NotificationScreen extends StatefulWidget {
   final String payload;
 
   @override
+  // ignore: library_private_types_in_public_api
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
@@ -26,6 +25,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ignore: deprecated_member_use
       backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
         leading: IconButton(
@@ -36,47 +36,51 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ),
         elevation: 0,
+        // ignore: deprecated_member_use
         backgroundColor: context.theme.backgroundColor,
         title: Text(
           _payload.toString().split('|')[0],
           style: TextStyle(color: Get.isDarkMode ? Colors.white : darkGreyClr),
         ),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(
+              height: 10,
+            ),
             Column(
               children: [
                 Text(
-                  'Hello, Hassan',
+                  'Hello, Abdulrahman',
                   style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w900,
-                    color: Get.isDarkMode ? Colors.white : darkGreyClr,
-                  ),
+                      fontSize: 26,
+                      fontWeight: FontWeight.w900,
+                      color: Get.isDarkMode ? Colors.white : darkGreyClr),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   'You have a new reminder',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    color: Get.isDarkMode ? Colors.grey[100] : darkGreyClr,
-                  ),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      color: Get.isDarkMode ? Colors.grey[100] : darkGreyClr),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(
+              height: 20,
+            ),
             Expanded(
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: primaryClr,
-                ),
+                    borderRadius: BorderRadius.circular(30), color: primaryClr),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,20 +92,26 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             size: 35,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Text(
                             'Title',
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         _payload.toString().split('|')[0],
                         style:
                             const TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Row(
                         children: [
                           Icon(
@@ -109,21 +119,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             size: 35,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Text(
                             'Description',
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         _payload.toString().split('|')[1],
                         style:
                             const TextStyle(color: Colors.white, fontSize: 20),
                         textAlign: TextAlign.justify,
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Row(
                         children: [
                           Icon(
@@ -131,14 +147,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             size: 35,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(
+                            width: 20,
+                          ),
                           Text(
                             'Date',
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         _payload.toString().split('|')[2],
                         style:
@@ -149,7 +169,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),

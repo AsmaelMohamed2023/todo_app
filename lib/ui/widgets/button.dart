@@ -4,6 +4,7 @@ import 'package:todo/ui/theme.dart';
 class MyButton extends StatelessWidget {
   const MyButton({Key? key, required this.label, required this.onTap})
       : super(key: key);
+
   final String label;
   final Function() onTap;
 
@@ -12,17 +13,17 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        alignment: Alignment.center,
         width: 100,
         height: 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: primaryClr,
         ),
-        alignment: Alignment.center,
         child: Text(
           label,
           style: const TextStyle(
-            color: white,
+            color: Colors.white,
           ),
           textAlign: TextAlign.center,
         ),
