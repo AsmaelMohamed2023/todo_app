@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo/ui/size_config.dart';
-import 'package:todo/ui/theme.dart';
+
 import '../../models/task.dart';
+import '../size_config.dart';
+import '../theme.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile(this.task, {Key? key}) : super(key: key);
@@ -13,17 +14,19 @@ class TaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: getProportionateScreenWidth(
-              SizeConfig.orientation == Orientation.landscape ? 4 : 20)),
+        horizontal: getProportionateScreenWidth(
+            SizeConfig.orientation == Orientation.landscape ? 4 : 20),
+      ),
       width: SizeConfig.orientation == Orientation.landscape
           ? SizeConfig.screenWidth / 2
           : SizeConfig.screenWidth,
       margin: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
       child: Container(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: _getBGCLR(task.color)),
+          borderRadius: BorderRadius.circular(16),
+          color: _getBGClr(task.color),
+        ),
         child: Row(
           children: [
             Expanded(
@@ -34,15 +37,14 @@ class TaskTile extends StatelessWidget {
                     Text(
                       task.title!,
                       style: GoogleFonts.lato(
-                          textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      )),
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -51,29 +53,27 @@ class TaskTile extends StatelessWidget {
                           color: Colors.grey[200],
                           size: 18,
                         ),
-                        const SizedBox(
-                          width: 12,
-                        ),
+                        const SizedBox(width: 12),
                         Text(
                           '${task.startTime} - ${task.endTime}',
                           style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                            color: Colors.grey[100],
-                            fontSize: 10,
-                          )),
+                            textStyle: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey[100],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const SizedBox(height: 12),
                     Text(
                       task.note!,
                       style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                        color: Colors.grey[100],
-                        fontSize: 15,
-                      )),
+                        textStyle: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[100],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -90,20 +90,21 @@ class TaskTile extends StatelessWidget {
               child: Text(
                 task.isCompleted == 0 ? 'TODO' : 'Completed',
                 style: GoogleFonts.lato(
-                    textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                )),
+                  textStyle: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  _getBGCLR(int? color) {
+  _getBGClr(int? color) {
     switch (color) {
       case 0:
         return bluishClr;

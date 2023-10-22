@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+
 import 'package:rxdart/rxdart.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
 import '/models/task.dart';
 import '/ui/pages/notification_screen.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 
 class NotifyHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -17,14 +19,13 @@ class NotifyHelper {
 
   final BehaviorSubject<String> selectNotificationSubject =
       BehaviorSubject<String>();
-
   initializeNotification() async {
     tz.initializeTimeZones();
     _configureSelectNotificationSubject();
     await _configureLocalTimeZone();
     // await requestIOSPermissions(flutterLocalNotificationsPlugin);
-    final DarwinInitializationSettings initializationSettingsIOS =
-        DarwinInitializationSettings(
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -41,11 +42,11 @@ class NotifyHelper {
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse? payload) async {
+      onSelectNotification: (String? payload) async {
         if (payload != null) {
-          debugPrint('notification payload: $payload');
+          debugPrint('notification payload: ' + payload);
         }
-        selectNotificationSubject.add(payload.toString());
+        selectNotificationSubject.add(payload!);
       },
     );
   }
@@ -53,11 +54,9 @@ class NotifyHelper {
   displayNotification({required String title, required String body}) async {
     print('doing test');
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-        'your channel id', 'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high);
-    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.max, priority: Priority.high);
+    var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
@@ -72,12 +71,10 @@ class NotifyHelper {
 
   cancelNotification(Task task) async {
     await flutterLocalNotificationsPlugin.cancel(task.id!);
-    print('Notification is canceled');
   }
 
-  cancelAllNotifications() async {
+  cancelAllNotification() async {
     await flutterLocalNotificationsPlugin.cancelAll();
-    print('Notification is canceled');
   }
 
   scheduledNotification(int hour, int minutes, Task task) async {
@@ -90,28 +87,28 @@ class NotifyHelper {
           hour, minutes, task.remind!, task.repeat!, task.date!),
       const NotificationDetails(
         android: AndroidNotificationDetails(
-            'your channel id', 'your channel name',
-            channelDescription: 'your channel description'),
+            'your channel id', 'your channel name', 'your channel description'),
       ),
-      // ignore: deprecated_member_use
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
       payload: '${task.title}|${task.note}|${task.startTime}|',
     );
+    return 0;
   }
 
   tz.TZDateTime _nextInstanceOfTenAM(
       int hour, int minutes, int remind, String repeat, String date) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print('now = $now');
 
     var formattedDate = DateFormat.yMd().parse(date);
-
     final tz.TZDateTime fd = tz.TZDateTime.from(formattedDate, tz.local);
 
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(tz.local, fd.year, fd.month, fd.day, hour, minutes);
+    print('scheduledDate = $scheduledDate');
 
     scheduledDate = afterRemind(remind, scheduledDate);
 
@@ -131,7 +128,7 @@ class NotifyHelper {
       scheduledDate = afterRemind(remind, scheduledDate);
     }
 
-    print('Next scheduledDate = $scheduledDate');
+    print('next scheduledDate = $scheduledDate');
 
     return scheduledDate;
   }
@@ -140,12 +137,15 @@ class NotifyHelper {
     if (remind == 5) {
       scheduledDate = scheduledDate.subtract(const Duration(minutes: 5));
     }
+
     if (remind == 10) {
       scheduledDate = scheduledDate.subtract(const Duration(minutes: 10));
     }
+
     if (remind == 15) {
       scheduledDate = scheduledDate.subtract(const Duration(minutes: 15));
     }
+
     if (remind == 20) {
       scheduledDate = scheduledDate.subtract(const Duration(minutes: 20));
     }
@@ -205,15 +205,15 @@ class NotifyHelper {
           )
         ],
       ),
-    );
+    ); 
  */
     Get.dialog(Text(body!));
   }
 
   void _configureSelectNotificationSubject() {
     selectNotificationSubject.stream.listen((String payload) async {
-      debugPrint('My payload is $payload');
-      await Get.to(() => const NotificationScreen(payload: ''));
+      debugPrint('My payload is ' + payload);
+      await Get.to(() => NotificationScreen(payload: payload));
     });
   }
 }
